@@ -5,5 +5,4 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface SalesmanRepository extends MongoRepository<Salesman, String> {
     Salesman findSalesmanBySid(int sid);
-
 }

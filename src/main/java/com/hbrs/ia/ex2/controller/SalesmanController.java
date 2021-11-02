@@ -17,11 +17,6 @@ public class SalesmanController {
     @Autowired
     SalesmanRepository salesmanRepository;
 
-    @GetMapping("/")
-    public String index() {
-        return "Salesman API Works";
-    }
-
     @GetMapping("/api/salesmen/{id}")
     public Salesman getSalesman(@PathVariable int id) {
         return salesmanRepository.findSalesmanBySid( id);
