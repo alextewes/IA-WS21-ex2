@@ -14,8 +14,6 @@ import java.util.List;
 @RestController
 public class SalesmanController {
 
-    List<Salesman> sm = new ArrayList<>();
-
     @Autowired
     SalesmanRepository salesmanRepository;
 
@@ -24,7 +22,7 @@ public class SalesmanController {
         return "Salesman API Works";
     }
 
-    @GetMapping("/api/salesman/{id}")
+    @GetMapping("/api/salesmen/{id}")
     public Salesman getSalesman(@PathVariable int id) {
         return salesmanRepository.findSalesmanBySid( id);
     }
@@ -32,12 +30,12 @@ public class SalesmanController {
     public List<Salesman> getSalesmen() {
         return salesmanRepository.findAll();
     }
-    @PostMapping("/api/salesman")
+    @PostMapping("/api/salesmen")
     public Salesman createSalesman(@Valid @RequestBody Salesman salesman){
         salesmanRepository.insert(salesman);
         return salesman;
     }
-    @PatchMapping("/api/salesman")
+    @PatchMapping("/api/salesmen")
     public Salesman updateSalesman(@Valid @RequestBody Salesman salesman){
         Salesman s = salesmanRepository.findSalesmanBySid( salesman.getSid());
         s.setFirstName(salesman.getFirstName());
@@ -45,7 +43,7 @@ public class SalesmanController {
         salesmanRepository.save(s);
         return s;
     }
-    @DeleteMapping("/api/salesman/{sid}")
+    @DeleteMapping("/api/salesmen/{sid}")
     public Salesman deleteSalesman(@PathVariable int sid){
         Salesman s = salesmanRepository.findSalesmanBySid( sid);
         salesmanRepository.deleteById("" + sid);
