@@ -2,6 +2,7 @@ package com.hbrs.ia.ex2.controller;
 
 import com.hbrs.ia.ex2.model.Salesman;
 import com.hbrs.ia.ex2.repositories.SalesmanRepository;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,9 @@ import java.util.List;
 @RestController
 public class SalesmanController {
 
+    List<Salesman> sm = new ArrayList<>();
+
+
     @Autowired
     SalesmanRepository salesmanRepository;
 
@@ -22,20 +26,23 @@ public class SalesmanController {
         return "Salesman API Works";
     }
 
-    @GetMapping("/api/salesmen/{id}")
+    /*@ApiModelProperty(
+            example="{sid : 1, firstName : Peter, lastName : Griffin, dob : 20.03.1969, experience : good }"
+    )*/
+    @GetMapping("/api/salesman/{id}")
     public Salesman getSalesman(@PathVariable int id) {
-        return salesmanRepository.findSalesmanBySid( id);
+        return salesmanRepository.findSalesmanBySid(id);
     }
     @GetMapping("/api/salesmen")
     public List<Salesman> getSalesmen() {
         return salesmanRepository.findAll();
     }
-    @PostMapping("/api/salesmen")
+    @PostMapping("/api/salesman")
     public Salesman createSalesman(@Valid @RequestBody Salesman salesman){
         salesmanRepository.insert(salesman);
         return salesman;
     }
-    @PatchMapping("/api/salesmen")
+    @PatchMapping("/api/salesman")
     public Salesman updateSalesman(@Valid @RequestBody Salesman salesman){
         Salesman s = salesmanRepository.findSalesmanBySid( salesman.getSid());
         s.setFirstName(salesman.getFirstName());
@@ -43,7 +50,7 @@ public class SalesmanController {
         salesmanRepository.save(s);
         return s;
     }
-    @DeleteMapping("/api/salesmen/{sid}")
+    @DeleteMapping("/api/salesman/{sid}")
     public Salesman deleteSalesman(@PathVariable int sid){
         Salesman s = salesmanRepository.findSalesmanBySid( sid);
         salesmanRepository.deleteById("" + sid);
