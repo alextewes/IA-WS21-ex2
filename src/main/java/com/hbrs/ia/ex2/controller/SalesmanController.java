@@ -30,13 +30,16 @@ public class SalesmanController {
         salesmanRepository.insert(salesman);
         return salesman;
     }
-    @PatchMapping("/api/salesmen")
+    @PutMapping("/api/salesmen")
     public Salesman updateSalesman(@Valid @RequestBody Salesman salesman){
         Salesman s = salesmanRepository.findSalesmanBySid( salesman.getSid());
         s.setFirstName(salesman.getFirstName());
         s.setLastName(salesman.getLastName());
+        s.setDob(salesman.getDob());
+        s.setExperience(salesman.getExperience());
         salesmanRepository.save(s);
-        return s;
+
+        return salesmanRepository.findSalesmanBySid(salesman.getSid());
     }
     @DeleteMapping("/api/salesmen/{sid}")
     public Salesman deleteSalesman(@PathVariable int sid){

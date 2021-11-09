@@ -1,9 +1,12 @@
 package com.hbrs.ia.ex2.model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "salesman")
 public class Salesman{
+    @Id
+    private String _id;
     private int sid;
     private String firstName;
     private String lastName;
@@ -14,6 +17,13 @@ public class Salesman{
         this.sid = sid;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public int getSid() {

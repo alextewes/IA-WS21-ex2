@@ -16,6 +16,7 @@ public class PerformanceRecordController {
 
     @Autowired
     PerformanceRecordRepository performanceRecordRepository;
+
     @GetMapping("/api/salesmen/{sid}/performanceRecords")
     public List<PerformanceRecord> getPerformanceRecords(@PathVariable int sid) {
         return performanceRecordRepository.findAllBySid(sid);
@@ -28,10 +29,15 @@ public class PerformanceRecordController {
     public PerformanceRecord createPerformanceRecord(@Valid @RequestBody PerformanceRecord performanceRecord){
         return performanceRecordRepository.save(performanceRecord);
     }
-    //TODO: What should be implemented PATCH OR PUT?
-    @PatchMapping("/api/salesmen/{sid}/performanceRecords/{erid}")
-    public PerformanceRecord updatePerformanceRecord(@Valid @RequestBody PerformanceRecord performanceRecord){
-        return null;
+    @PutMapping("/api/salesmen/{sid}/performanceRecords")
+    public PerformanceRecord updatePerformanceRecord(@PathVariable int sid, @Valid @RequestBody PerformanceRecord performanceRecord){
+        PerformanceRecord p = performanceRecordRepository.findPerformanceRecordByEridAndSid(performanceRecord.getErid(),sid);
+        p.setActualValue(performanceRecord.getActualValue());
+        p.setTargetValue(performanceRecord.getTargetValue());
+        p.setGoalDescription(performanceRecord.getGoalDescription());
+        p.setYear(performanceRecord.getYear());
+        performanceRecordRepository.save(p);
+        return performanceRecordRepository.findPerformanceRecordByEridAndSid(sid,performanceRecord.getErid());
     }
     //TODO: Deletes specified entry but doesn't return it
     @DeleteMapping("/api/salesmen/{sid}/performanceRecords/{erid}")

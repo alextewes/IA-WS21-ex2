@@ -1,10 +1,13 @@
 package com.hbrs.ia.ex2.model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 @Document(collection = "performanceRecord")
 public class PerformanceRecord {
+    @Id
+    private String _id;
     private int erid;
     private int actualValue;
     private int targetValue;
@@ -19,6 +22,14 @@ public class PerformanceRecord {
         this.goalDescription = goalDescription;
         this.year = year;
         this.sid = sid;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public int getErid() {
